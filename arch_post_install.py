@@ -13,11 +13,12 @@ FILE_MIRRORLIST = '/etc/pacman.d/mirrorlist'
 ########## helper functions
 ##########
 
-def term(cmds: list[str], *, capture_output:bool=False) -> None | str:
+def term(cmds: list[str], *, capture_output:bool=False) -> str:
     # TODO: check if fail, and if so, ask the user to continue or quit
     proc = subprocess.run(cmds, check=True, capture_output=capture_output)
     if capture_output:
         return proc.stdout.decode()
+    return ''
 
 def pkg_install(pkgs: list[str]) -> None:
     term(['pacman', '-S', *pkgs])
@@ -51,6 +52,9 @@ def work_install_some_random_software() -> None:
     pkg_install(['steam', 'polkit', 'xdg-desktop-portal-impl']) # 2025.08.20
     pkg_install(['git', 'less']) # 2025.08.20
 
+    # python dev
+    pkg_install(['pyright'])
+
 def work_video_drivers() -> None:
     # amd
     pkg_install(['lib32-mesa', 'vulkan-radeon', 'lib32-vulkan-radeon', 'vulkan-icd-loader', 'lib32-vulkan-icd-loader']) # never
@@ -65,7 +69,10 @@ def work_get_user() -> str:
     assert len(users) == 1 # IMPROVE
     return users[0]
 
-def work_home_directories(user: str) -> None:
+def work_home_structure(user: str) -> None:
+    ... # TODO
+
+def work_swap_file() -> None:
     ... # TODO
 
 ##########
@@ -79,8 +86,8 @@ def main():
     work_video_drivers()
     work_install_some_random_software() # needs to be ran after `work_video_drivers` - otherwise the user would get asked for a video driver because of steam
     work_shell(user)
-    work_home_directories(user)
-    # TODO: setup swapfile
+    work_home_structure(user)
+    work_swap_file()
 
 if __name__ == '__main__':
     main()
