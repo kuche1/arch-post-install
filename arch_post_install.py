@@ -20,7 +20,7 @@ def term(cmds: list[str], *, capture_output:bool=False) -> None | str:
         return proc.stdout.decode()
 
 def pkg_install(pkgs: list[str]) -> None:
-    term(['sudo', 'pacman', '-S', *pkgs])
+    term(['pacman', '-S', *pkgs])
 
 ##########
 ########## sub-functionalities
@@ -41,7 +41,7 @@ def work_pin_mirrorlist_date() -> None:
     with open(FILE_MIRRORLIST, 'w') as f:
         f.write(data)
 
-    term(['sudo', 'pacman', '-Syyuu'])
+    term(['pacman', '-Syyuu'])
 
 def work_install_some_random_software() -> None:
     pkg_install(['discord', 'libappindicator-gtk3', 'libpulse', 'xdg-utils']) # 2025.08.19
@@ -58,7 +58,7 @@ def work_video_drivers() -> None:
 def work_shell(user: str) -> None:
     pkg_install(['fish', 'python', 'pkgfile', 'groff', 'mandoc', 'xsel', 'xclip', 'wl-clipboard']) # 2025.08.19
     fish_location = term(['which', 'fish'], capture_output=True).strip()
-    term(['sudo', 'chsh', '--shell', fish_location, user])
+    term(['chsh', '--shell', fish_location, user])
 
 def work_get_user() -> str:
     _, users, _ = next(os.walk('/home'))
