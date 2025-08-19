@@ -48,7 +48,7 @@ def work_install_some_random_software() -> None:
     pkg_install(['micro', 'wl-clipboard', 'xclip']) # 2025.08.19
     pkg_install(['firefox', 'hunspell-en_us', 'libnotify', 'xdg-desktop-portal']) # 2025.08.19
     pkg_install(['btop', 'rocm-smi-lib']) # 2025.08.19
-    pkg_install(['steam']) # 2025.08.19
+    pkg_install(['steam', 'polkit', 'xdg-desktop-portal-impl']) # 2025.08.20
     pkg_install(['git', 'less']) # 2025.08.20
 
 def work_video_drivers() -> None:
