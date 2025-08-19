@@ -76,8 +76,8 @@ def main():
     user = work_get_user()
 
     work_pin_mirrorlist_date()
-    work_install_some_random_software()
     work_video_drivers()
+    work_install_some_random_software() # needs to be ran after `work_video_drivers` - otherwise the user would get asked for a video driver because of steam
     work_shell(user)
     work_home_directories(user)
     # TODO: setup swapfile
