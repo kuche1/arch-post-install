@@ -5,6 +5,7 @@
 
 import subprocess
 from datetime import date, timedelta
+import os
 
 FILE_MIRRORLIST = '/etc/pacman.d/mirrorlist'
 
