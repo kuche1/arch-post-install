@@ -54,6 +54,9 @@ def work_install_some_random_software() -> None:
     # python dev
     pkg_install(['pyright'])
 
+    # asian fonts
+    pkg_install(['noto-fonts-cjk'])
+
 def work_video_drivers() -> None:
     # amd
     pkg_install(['lib32-mesa', 'vulkan-radeon', 'lib32-vulkan-radeon', 'vulkan-icd-loader', 'lib32-vulkan-icd-loader'])
