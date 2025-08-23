@@ -1,8 +1,5 @@
 #! /usr/bin/env python3
 
-# INFO:
-# next to each package you will see a date, this is the date where the optional dependencies were last evaluated
-
 import subprocess
 from datetime import date, timedelta
 import os
@@ -45,22 +42,24 @@ def work_pin_mirrorlist_date() -> None:
     term(['pacman', '-Syyuu'])
 
 def work_install_some_random_software() -> None:
-    pkg_install(['discord', 'libappindicator-gtk3', 'libpulse', 'xdg-utils']) # 2025.08.19
-    pkg_install(['micro', 'wl-clipboard', 'xclip']) # 2025.08.19
-    pkg_install(['firefox', 'hunspell-en_us', 'libnotify', 'xdg-desktop-portal']) # 2025.08.19
-    pkg_install(['btop', 'rocm-smi-lib']) # 2025.08.19
-    pkg_install(['steam', 'polkit', 'xdg-desktop-portal-impl']) # 2025.08.20
-    pkg_install(['git', 'less']) # 2025.08.20
+    pkg_install(['discord', 'libappindicator-gtk3', 'libpulse', 'xdg-utils'])
+    pkg_install(['micro', 'wl-clipboard', 'xclip'])
+    pkg_install(['firefox', 'hunspell-en_us', 'libnotify', 'xdg-desktop-portal'])
+    pkg_install(['btop', 'rocm-smi-lib'])
+    pkg_install(['steam', 'polkit', 'xdg-desktop-portal-impl'])
+    pkg_install(['git', 'less'])
+    pkg_install(['mpv', 'yt-dlp'])
+    pkg_install(['yt-dlp', 'ffmpeg', 'rtmpdump', 'atomicparsley', 'python-mutagen', 'python-pycryptodome', 'python-pycryptodomex', 'python-websockets', 'python-brotli', 'python-brotlicffi', 'python-xattr', 'phantomjs', 'python-secretstorage']) # not needed: aria2
 
     # python dev
     pkg_install(['pyright'])
 
 def work_video_drivers() -> None:
     # amd
-    pkg_install(['lib32-mesa', 'vulkan-radeon', 'lib32-vulkan-radeon', 'vulkan-icd-loader', 'lib32-vulkan-icd-loader']) # never
+    pkg_install(['lib32-mesa', 'vulkan-radeon', 'lib32-vulkan-radeon', 'vulkan-icd-loader', 'lib32-vulkan-icd-loader'])
 
 def work_shell(user: str) -> None:
-    pkg_install(['fish', 'python', 'pkgfile', 'groff', 'mandoc', 'xsel', 'xclip', 'wl-clipboard']) # 2025.08.19
+    pkg_install(['fish', 'python', 'pkgfile', 'groff', 'mandoc', 'xsel', 'xclip', 'wl-clipboard'])
     fish_location = term(['which', 'fish'], capture_output=True).strip()
     term(['chsh', '--shell', fish_location, user])
 
@@ -75,6 +74,9 @@ def work_home_structure(user: str) -> None:
 def work_swap_file() -> None:
     ... # TODO
 
+def work_pacman_config() -> None:
+    ... # TODO
+
 ##########
 ########## main
 ##########
@@ -83,6 +85,7 @@ def main():
     user = work_get_user()
 
     work_pin_mirrorlist_date()
+    work_pacman_config()
     work_video_drivers()
     work_install_some_random_software() # needs to be ran after `work_video_drivers` - otherwise the user would get asked for a video driver because of steam
     work_shell(user)
