@@ -143,7 +143,7 @@ def work_pacman_config() -> None:
         data = f.read()
 
     data = data.replace("\n#Color\n", "\nColor\n")
-    data = data.replace("\n#VerbosePkgLists\n", "\n#VerbosePkgLists\n")
+    data = data.replace("\n#VerbosePkgLists\n", "\nVerbosePkgLists\n")
 
     with open(FILE_PACMANCONF, "w") as f:
         f.write(data)
