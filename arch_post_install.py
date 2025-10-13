@@ -152,8 +152,28 @@ def work_pacman_config() -> None:
 
 
 def work_desktop_environment() -> None:
-    # TODO
-    ...
+    "Install niri."
+
+    pkg_install(
+        [
+            "niri",
+            "xdg-desktop-portal-impl",  # TODO: xdg-desktop-portal-gtk, xdg-desktop-portal-kde, xdg-desktop-portal-gnome, xdg-desktop-portal-hyprland, xdg-desktop-portal-lxqt, xdg-desktop-portal-wlr, xdg-desktop-portal-xapp, xdg-desktop-portal-dde, xdg-desktop-portal-cosmic, xdg-desktop-portal-kde
+            "alacritty",
+            "bash",
+            "fuzzel",
+            "mako",
+            "org.freedesktop.secrets",  # TODO: gnome-keyring, keepassxc, kwallet
+            "swaybg",
+            "swaylock",
+            "waybar",
+            "xdg-desktop-portal-gnome",
+            "xdg-desktop-portal-gtk",
+            "xwayland-satellite",
+        ]
+    )
+
+    # waybar font
+    pkg_install(["otf-font-awesome"])
 
 
 ##########
