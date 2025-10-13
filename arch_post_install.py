@@ -53,6 +53,10 @@ def work_pin_mirrorlist_date() -> None:
 
 
 def work_install_some_random_software() -> None:
+    # fonts (required by micro and firefox)
+    pkg_install(["noto-fonts"])  # regular
+    pkg_install(["noto-fonts-cjk"])  # asian
+
     pkg_install(["discord", "libappindicator-gtk3", "libpulse", "xdg-utils"])
     pkg_install(["micro", "wl-clipboard", "xclip"])
     pkg_install(["firefox", "hunspell-en_us", "libnotify", "xdg-desktop-portal"])
@@ -79,10 +83,6 @@ def work_install_some_random_software() -> None:
 
     # python dev
     pkg_install(["pyright"])
-
-    # fonts
-    pkg_install(["noto-fonts"])  # regular
-    pkg_install(["noto-fonts-cjk"])  # asian
 
     pkg_install(["mangohud", "lib32-mangohud"])  # TODO: update environment
 
