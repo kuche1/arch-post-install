@@ -23,7 +23,9 @@ def term(cmds: list[str], *, capture_output: bool = False) -> str:
 
 
 def pkg_install(pkgs: list[str]) -> None:
-    term(["pacman", "-S", *pkgs])
+    # `--needed` should not be a problem considering the fact that we
+    # are supposed to do a full system upgrade beforehand
+    term(["pacman", "-S", "--needed", *pkgs])
 
 
 ##########
