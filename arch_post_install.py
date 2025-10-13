@@ -54,8 +54,9 @@ def work_install_some_random_software() -> None:
     # python dev
     pkg_install(['pyright'])
 
-    # asian fonts
-    pkg_install(['noto-fonts-cjk'])
+    # fonts
+    pkg_install(['noto-fonts']) # regular
+    pkg_install(['noto-fonts-cjk']) # asian
 
     pkg_install(['mangohud', 'lib32-mangohud'])
 
