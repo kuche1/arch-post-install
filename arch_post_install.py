@@ -49,7 +49,7 @@ def work_install_some_random_software() -> None:
     pkg_install(['steam', 'polkit', 'xdg-desktop-portal-impl'])
     pkg_install(['git', 'less'])
     pkg_install(['mpv', 'yt-dlp'])
-    pkg_install(['yt-dlp', 'ffmpeg', 'rtmpdump', 'atomicparsley', 'python-mutagen', 'python-pycryptodome', 'python-pycryptodomex', 'python-websockets', 'python-brotli', 'python-brotlicffi', 'python-xattr', 'phantomjs', 'python-secretstorage']) # not needed: aria2
+    pkg_install(['yt-dlp', 'ffmpeg', 'rtmpdump', 'atomicparsley', 'python-mutagen', 'python-pycryptodome', 'python-pycryptodomex', 'python-websockets', 'python-brotli', 'python-brotlicffi', 'python-xattr', 'python-secretstorage']) # TODO: install `phantomjs` using AUR helper # not needed: aria2
 
     # python dev
     pkg_install(['pyright'])
