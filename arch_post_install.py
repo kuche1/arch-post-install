@@ -86,6 +86,7 @@ def work_install_some_random_software() -> None:
         ]
     )  # TODO: install `phantomjs` using AUR helper # not needed: aria2
     pkg_install(["rsync"])
+    pkg_install(["sshfs"])
 
     # python dev
     pkg_install(["pyright"])
