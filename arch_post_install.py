@@ -34,8 +34,11 @@ def pkg_install(pkgs: list[str]) -> None:
 
 
 def work_pin_mirrorlist_date() -> None:
-    today = date.today()
-    # yesterday = today - timedelta(days=1) # use this if `toda` fails
+    # TODO: need to make this check if the work has already been done
+    # and if so, return
+
+    today = date.today() # using this sometimes fails, you need to use yesterday's date
+    yesterday = today - timedelta(days=1) # use this if `toda` fails
 
     with open(FILE_MIRRORLIST) as f:
         data = f.readlines()
@@ -44,7 +47,7 @@ def work_pin_mirrorlist_date() -> None:
     data = "".join(data)
 
     data = (
-        f"Server=https://archive.archlinux.org/repos/{today.strftime('%Y/%m/%d')}/$repo/os/$arch\n"
+        f"Server=https://archive.archlinux.org/repos/{yesterday.strftime('%Y/%m/%d')}/$repo/os/$arch\n"
         + data
     )
 
@@ -82,6 +85,7 @@ def work_install_some_random_software() -> None:
             "python-secretstorage",
         ]
     )  # TODO: install `phantomjs` using AUR helper # not needed: aria2
+    pkg_install(["rsync"])
 
     # python dev
     pkg_install(["pyright"])
@@ -154,11 +158,17 @@ def work_pacman_config() -> None:
 def work_desktop_environment() -> None:
     "Install niri."
 
+    # I prefer this over the default niri terminal alacritty
+    pkg_install([
+        'gnome-terminal',
+        'libnautilus-extension',
+    ])
+
     pkg_install(
         [
             "niri",
             "xdg-desktop-portal-impl",  # TODO: xdg-desktop-portal-gtk, xdg-desktop-portal-kde, xdg-desktop-portal-gnome, xdg-desktop-portal-hyprland, xdg-desktop-portal-lxqt, xdg-desktop-portal-wlr, xdg-desktop-portal-xapp, xdg-desktop-portal-dde, xdg-desktop-portal-cosmic, xdg-desktop-portal-kde
-            "alacritty",
+            # "alacritty",
             "bash",
             "fuzzel",
             "mako",
