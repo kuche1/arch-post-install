@@ -108,6 +108,10 @@ def work_some_user_software() -> None:
     # python dev
     # pkg_install(["pyright"])
 
+    # rust dev
+    pkg_install(["rustup"])
+    pkg_install(["lldb", "gdb"], dep=True)
+
     pkg_install(["mangohud", "lib32-mangohud"])
     # TODO: update /etc/environment
 
