@@ -25,7 +25,7 @@ def term(cmds: list[str], *, capture_output: bool = False) -> str:
 def pkg_install(pkgs: list[str], *, dep: bool = False) -> None:
     # `--needed` should not be a problem considering the fact that we
     # are supposed to do a full system upgrade beforehand
-    arg_dep = [] if dep is False else ['--asdep']
+    arg_dep = [] if dep is False else ["--asdep"]
     term(["pacman", "-S", "--needed", *arg_dep, *pkgs])
 
 
@@ -38,8 +38,8 @@ def work_pin_mirrorlist_date() -> None:
     # TODO: need to make this check if the work has already been done
     # and if so, return
 
-    today = date.today() # using this sometimes fails, you need to use yesterday's date
-    yesterday = today - timedelta(days=1) # use this if `toda` fails
+    today = date.today()  # using this sometimes fails, you need to use yesterday's date
+    yesterday = today - timedelta(days=1)  # use this if `toda` fails
 
     with open(FILE_MIRRORLIST) as f:
         data = f.readlines()
@@ -100,7 +100,7 @@ def work_some_user_software() -> None:
             "python-xattr",
             "python-secretstorage",
         ],
-        dep=True
+        dep=True,
     )
     # TODO: install `phantomjs` using AUR helper # not needed: aria2
 
@@ -138,7 +138,7 @@ def work_shell(user: str) -> None:
             "xclip",
             "wl-clipboard",
         ],
-        dep=True
+        dep=True,
     )
 
     fish_location = term(["which", "fish"], capture_output=True).strip()
@@ -181,8 +181,8 @@ def work_desktop_environment() -> None:
     "Install niri."
 
     # I prefer this over the default niri terminal alacritty
-    pkg_install(['gnome-terminal'])
-    pkg_install(['libnautilus-extension'], dep=True)
+    pkg_install(["gnome-terminal"])
+    pkg_install(["libnautilus-extension"], dep=True)
 
     pkg_install(["niri"])
     pkg_install(
@@ -200,16 +200,18 @@ def work_desktop_environment() -> None:
             "xdg-desktop-portal-gtk",
             "xwayland-satellite",
         ],
-        dep=True
+        dep=True,
     )
 
 
 def work_fonts() -> None:
-    pkg_install([
-        "noto-fonts", # regular # for micro and firefox
-        "noto-fonts-cjk", # asian # for some websites in firefox
-        "otf-font-awesome", # for some icons in waybar
-    ])
+    pkg_install(
+        [
+            "noto-fonts",  # regular # for micro and firefox
+            "noto-fonts-cjk",  # asian # for some websites in firefox
+            "otf-font-awesome",  # for some icons in waybar
+        ]
+    )
 
 
 ##########
