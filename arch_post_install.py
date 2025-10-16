@@ -203,12 +203,14 @@ def work_desktop_environment() -> None:
         dep=True
     )
 
+
 def work_fonts() -> None:
     pkg_install([
         "noto-fonts", # regular # for micro and firefox
         "noto-fonts-cjk", # asian # for some websites in firefox
         "otf-font-awesome", # for some icons in waybar
     ])
+
 
 ##########
 ########## main
