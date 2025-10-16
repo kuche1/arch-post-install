@@ -88,6 +88,7 @@ def work_some_user_software() -> None:
     pkg_install(["yt-dlp"])
     pkg_install(
         [
+            # "aria2"
             "ffmpeg",
             "rtmpdump",
             "atomicparsley",
@@ -102,13 +103,13 @@ def work_some_user_software() -> None:
         ],
         dep=True,
     )
-    # TODO: install `phantomjs` using AUR helper # not needed: aria2
+    # TODO: install `phantomjs` using AUR helper
 
     # python dev
     # pkg_install(["pyright"])
 
     pkg_install(["mangohud", "lib32-mangohud"])
-    # TODO: update environment
+    # TODO: update /etc/environment
 
 
 def work_video_drivers() -> None:
@@ -168,13 +169,16 @@ def work_swap_file() -> None:
 
 def work_pacman_config() -> None:
     with open(FILE_PACMANCONF, "r") as f:
-        data = f.read()
+        data_original = f.read()
 
-    data = data.replace("\n#Color\n", "\nColor\n")
-    data = data.replace("\n#VerbosePkgLists\n", "\nVerbosePkgLists\n")
+    data_new = data_original
+    data_new = data_new.replace("\n#Color\n", "\nColor\n")
+    data_new = data_new.replace("\n#VerbosePkgLists\n", "\nVerbosePkgLists\n")
 
-    with open(FILE_PACMANCONF, "w") as f:
-        f.write(data)
+    if data_original != data_new:
+        print(f"Updating {FILE_PACMANCONF}")
+        with open(FILE_PACMANCONF, "w") as f:
+            f.write(data_new)
 
 
 def work_desktop_environment() -> None:
