@@ -22,10 +22,11 @@ def term(cmds: list[str], *, capture_output: bool = False) -> str:
     return ""
 
 
-def pkg_install(pkgs: list[str]) -> None:
+def pkg_install(pkgs: list[str], *, dep: bool = False) -> None:
     # `--needed` should not be a problem considering the fact that we
     # are supposed to do a full system upgrade beforehand
-    term(["pacman", "-S", "--needed", *pkgs])
+    arg_dep = [] if dep is False else ['--asdep']
+    term(["pacman", "-S", "--needed", *arg_dep, *pkgs])
 
 
 ##########
@@ -57,21 +58,36 @@ def work_pin_mirrorlist_date() -> None:
     term(["pacman", "-Syyuu"])
 
 
-def work_install_some_random_software() -> None:
-    # fonts (required by micro and firefox)
-    pkg_install(["noto-fonts"])  # regular
-    pkg_install(["noto-fonts-cjk"])  # asian
+def work_some_user_software() -> None:
+    pkg_install(["rsync"])
+    pkg_install(["python"], dep=True)
 
-    pkg_install(["discord", "libappindicator-gtk3", "libpulse", "xdg-utils"])
-    pkg_install(["micro", "wl-clipboard", "xclip"])
-    pkg_install(["firefox", "hunspell-en_us", "libnotify", "xdg-desktop-portal"])
-    pkg_install(["btop", "rocm-smi-lib"])
-    pkg_install(["steam", "polkit", "xdg-desktop-portal-impl"])
-    pkg_install(["git", "less"])
-    pkg_install(["mpv", "yt-dlp"])
+    pkg_install(["sshfs"])
+
+    pkg_install(["discord"])
+    pkg_install(["libappindicator-gtk3", "libpulse", "xdg-utils"], dep=True)
+
+    pkg_install(["micro"])
+    pkg_install(["wl-clipboard", "xclip"], dep=True)
+
+    pkg_install(["firefox"])
+    pkg_install(["hunspell-en_us", "libnotify", "xdg-desktop-portal"], dep=True)
+
+    pkg_install(["btop"])
+    pkg_install(["rocm-smi-lib"], dep=True)
+
+    pkg_install(["steam"])
+    pkg_install(["polkit", "xdg-desktop-portal-impl"], dep=True)
+
+    pkg_install(["git"])
+    pkg_install(["less"], dep=True)
+
+    pkg_install(["mpv"])
+    pkg_install(["yt-dlp"], dep=True)
+
+    pkg_install(["yt-dlp"])
     pkg_install(
         [
-            "yt-dlp",
             "ffmpeg",
             "rtmpdump",
             "atomicparsley",
@@ -83,18 +99,21 @@ def work_install_some_random_software() -> None:
             "python-brotlicffi",
             "python-xattr",
             "python-secretstorage",
-        ]
-    )  # TODO: install `phantomjs` using AUR helper # not needed: aria2
-    pkg_install(["rsync"])
-    pkg_install(["sshfs"])
+        ],
+        dep=True
+    )
+    # TODO: install `phantomjs` using AUR helper # not needed: aria2
 
     # python dev
-    pkg_install(["pyright"])
+    # pkg_install(["pyright"])
 
-    pkg_install(["mangohud", "lib32-mangohud"])  # TODO: update environment
+    pkg_install(["mangohud", "lib32-mangohud"])
+    # TODO: update environment
 
 
 def work_video_drivers() -> None:
+    # required by steam
+
     # amd
     pkg_install(
         [
@@ -108,9 +127,9 @@ def work_video_drivers() -> None:
 
 
 def work_shell(user: str) -> None:
+    pkg_install(["fish"])
     pkg_install(
         [
-            "fish",
             "python",
             "pkgfile",
             "groff",
@@ -118,8 +137,10 @@ def work_shell(user: str) -> None:
             "xsel",
             "xclip",
             "wl-clipboard",
-        ]
+        ],
+        dep=True
     )
+
     fish_location = term(["which", "fish"], capture_output=True).strip()
     term(["chsh", "--shell", fish_location, user])
 
@@ -160,32 +181,34 @@ def work_desktop_environment() -> None:
     "Install niri."
 
     # I prefer this over the default niri terminal alacritty
-    pkg_install([
-        'gnome-terminal',
-        'libnautilus-extension',
-    ])
+    pkg_install(['gnome-terminal'])
+    pkg_install(['libnautilus-extension'], dep=True)
 
+    pkg_install(["niri"])
     pkg_install(
         [
-            "niri",
-            "xdg-desktop-portal-impl",  # TODO: xdg-desktop-portal-gtk, xdg-desktop-portal-kde, xdg-desktop-portal-gnome, xdg-desktop-portal-hyprland, xdg-desktop-portal-lxqt, xdg-desktop-portal-wlr, xdg-desktop-portal-xapp, xdg-desktop-portal-dde, xdg-desktop-portal-cosmic, xdg-desktop-portal-kde
+            "xdg-desktop-portal-impl",  # TODO: pick one: xdg-desktop-portal-gtk, xdg-desktop-portal-kde, xdg-desktop-portal-gnome, xdg-desktop-portal-hyprland, xdg-desktop-portal-lxqt, xdg-desktop-portal-wlr, xdg-desktop-portal-xapp, xdg-desktop-portal-dde, xdg-desktop-portal-cosmic, xdg-desktop-portal-kde
             # "alacritty",
             "bash",
             "fuzzel",
             "mako",
-            "org.freedesktop.secrets",  # TODO: gnome-keyring, keepassxc, kwallet
+            "org.freedesktop.secrets",  # TODO: pick one: gnome-keyring, keepassxc, kwallet
             "swaybg",
             "swaylock",
             "waybar",
             "xdg-desktop-portal-gnome",
             "xdg-desktop-portal-gtk",
             "xwayland-satellite",
-        ]
+        ],
+        dep=True
     )
 
-    # waybar font
-    pkg_install(["otf-font-awesome"])
-
+def work_fonts() -> None:
+    pkg_install([
+        "noto-fonts", # regular # for micro and firefox
+        "noto-fonts-cjk", # asian # for some websites in firefox
+        "otf-font-awesome", # for some icons in waybar
+    ])
 
 ##########
 ########## main
@@ -195,16 +218,20 @@ def work_desktop_environment() -> None:
 def main():
     user = work_get_user()
 
+    # pacman
     work_pin_mirrorlist_date()
     work_pacman_config()
 
+    # software dependencies
     work_video_drivers()
+    work_fonts()
 
-    work_install_some_random_software()  # needs to be ran after `work_video_drivers` - otherwise the user would get asked for a video driver because of steam
     work_shell(user)
     # work_home_structure(user)
     work_swap_file()
     work_desktop_environment()
+
+    work_some_user_software()
 
 
 if __name__ == "__main__":
