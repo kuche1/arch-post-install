@@ -222,6 +222,12 @@ def work_fonts() -> None:
     )
 
 
+def work_thumbnails() -> None:
+    pkg_install(["totem"])
+    # 2025.10.16: this fixed the thumbnails in the file manager (the gnome one I think)
+    # you might additionally need `ffmpegthumbnailer`
+
+
 ##########
 ########## main
 ##########
@@ -237,6 +243,7 @@ def main():
     # software dependencies
     work_video_drivers()
     work_fonts()
+    work_thumbnails()
 
     work_shell(user)
     # work_home_structure(user)
