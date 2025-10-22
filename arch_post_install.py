@@ -100,10 +100,16 @@ def work_some_user_software() -> None:
             "python-brotlicffi",
             "python-xattr",
             "python-secretstorage",
+            "deno",
+            # 2025.10.22: `deno` will become a requirement for downloading youtube videos
+            #   https://github.com/yt-dlp/yt-dlp/issues/14404
         ],
         dep=True,
     )
     # TODO: install `phantomjs` using AUR helper
+    # 2025.10.22: it might be best if we did not install `phantomjs` altogether
+    #   https://github.com/yt-dlp/yt-dlp/issues/14404 (it is till used by some
+    #   extractors, but it will perhaps be abandoned)
 
     # python dev
     # pkg_install(["pyright"])
