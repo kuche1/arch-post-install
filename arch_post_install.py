@@ -199,9 +199,9 @@ def work_desktop_environment() -> None:
     pkg_install(["libnautilus-extension"], dep=True)
 
     pkg_install(["niri"])
+
     pkg_install(
         [
-            "xdg-desktop-portal-impl",  # TODO: pick one: xdg-desktop-portal-gtk, xdg-desktop-portal-kde, xdg-desktop-portal-gnome, xdg-desktop-portal-hyprland, xdg-desktop-portal-lxqt, xdg-desktop-portal-wlr, xdg-desktop-portal-xapp, xdg-desktop-portal-dde, xdg-desktop-portal-cosmic, xdg-desktop-portal-kde
             # "alacritty",
             "bash",
             "fuzzel",
@@ -210,12 +210,28 @@ def work_desktop_environment() -> None:
             "swaybg",
             "swaylock",
             "waybar",
-            "xdg-desktop-portal-gnome",
-            "xdg-desktop-portal-gtk",
             "xwayland-satellite",
         ],
         dep=True,
     )
+
+    # install xdg-desktop-portal-impl
+    # options: xdg-desktop-portal-gtk, xdg-desktop-portal-kde, xdg-desktop-portal-gnome, xdg-desktop-portal-hyprland, xdg-desktop-portal-lxqt, xdg-desktop-portal-wlr, xdg-desktop-portal-xapp, xdg-desktop-portal-dde, xdg-desktop-portal-cosmic, xdg-desktop-portal-kde
+    # see comparison: https://wiki.archlinux.org/title/XDG_Desktop_Portal#List_of_backends_and_interfaces
+    # NOTE 2025.10.30: the gnome portal is a piece of shit because you need to workaround mangohud BUT for now it's
+    #   the only option that allows screen sharing
+    pkg_install(
+        [
+            "xdg-desktop-portal-gnome",
+            "xdg-desktop-portal-gtk",
+        ],
+        dep=True,
+    )
+
+    # install image viewer
+    # I don't particularly like anything gnome-related, but I can't be bothered to check the alternatives
+    pkg_install(["eog"])
+    pkg_install(["eog-plugins"], dep=True)
 
 
 def work_fonts() -> None:
