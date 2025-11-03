@@ -121,6 +121,8 @@ def work_some_user_software() -> None:
     pkg_install(["mangohud", "lib32-mangohud"])
     # TODO: update /etc/environment
 
+    pkg_install(["pwgen"])
+
 
 def work_video_drivers() -> None:
     # required by steam
