@@ -123,6 +123,8 @@ def work_some_user_software() -> None:
 
     pkg_install(["pwgen"])
 
+    pkg_install(["tldr"])
+
 
 def work_video_drivers() -> None:
     # required by steam
