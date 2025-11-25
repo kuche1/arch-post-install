@@ -112,6 +112,8 @@ def work_some_user_software() -> None:
     #   extractors, but it will perhaps be abandoned)
 
     # python dev
+    # note 1) basedpyright is much better than pyright
+    # note 2) perhaps we should not install anything and keep the dependencies in venv
     # pkg_install(["pyright"])
 
     # rust dev
