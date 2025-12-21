@@ -127,6 +127,9 @@ def work_some_user_software() -> None:
 
     pkg_install(["tldr"])
 
+    # support for ntfs formatting in gnome-disks
+    pkg_install(["ntfs-3g"])
+
 
 def work_video_drivers() -> None:
     # required by steam
